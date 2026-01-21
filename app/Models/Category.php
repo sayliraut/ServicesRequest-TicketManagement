@@ -20,5 +20,4 @@ class Category extends Model
     protected $attributes = [
     'is_active' => true,
     ];
-
 }
