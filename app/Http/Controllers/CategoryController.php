@@ -20,5 +20,10 @@ public function loadAjax()
     );
 }
 
+public function create(){
+    $data['title'] = 'Create Category';
+    return view('categories.create', compact('data'));
+}
+
 
 }
