@@ -22,7 +22,41 @@ public function loadAjax()
 
 public function create(){
     $data['title'] = 'Create Category';
-    return view('categories.create', compact('data'));
+    return view('categories.form', compact('data'));
+}
+public function edit(Category $category)
+{
+    $data['title'] = 'Edit Category';
+    return view('categories.form', compact('data', 'category'));
+}
+public function update(Request $request, Category $category)
+{
+    try {
+        $validated = $request->validate([
+            'name' => 'required|string|min:2|max:100|unique:categories,name,' . $category->id,
+            'is_active' => 'nullable|boolean'
+        ]);
+
+        $category->name = $validated['name'];
+        $category->is_active = $request->has('is_active') ? 1 : 0;
+        $category->save();
+
+        if ($request->expectsJson()) {
+            return response()->json(['success' => true, 'message' => 'Category updated successfully!'], 200);
+        }
+
+        return redirect()->route('categories.index')->with('success', 'Category updated successfully!');
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        if ($request->expectsJson()) {
+            return response()->json(['success' => false, 'message' => 'Validation failed', 'errors' => $e->errors()], 422);
+        }
+        return back()->withErrors($e->errors())->withInput();
+    } catch (\Exception $e) {
+        if ($request->expectsJson()) {
+            return response()->json(['success' => false, 'message' => 'An error occurred: ' . $e->getMessage()], 500);
+        }
+        return back()->with('error', 'An error occurred: ' . $e->getMessage())->withInput();
+    }
 }
 public function store(Request $request){
     try {
@@ -60,6 +94,43 @@ public function store(Request $request){
             ], 500);
         }
         return back()->with('error', 'An error occurred: ' . $e->getMessage())->withInput();
+    }
+}
+
+public function destroy(Request $request, Category $category)
+{
+    try {
+        $category->delete();
+
+        if ($request->expectsJson()) {
+            return response()->json(['success' => true, 'message' => 'Category deleted successfully!'], 200);
+        }
+
+        return redirect()->route('categories.index')->with('success', 'Category deleted successfully!');
+    } catch (\Exception $e) {
+        if ($request->expectsJson()) {
+            return response()->json(['success' => false, 'message' => 'An error occurred: ' . $e->getMessage()], 500);
+        }
+        return back()->with('error', 'An error occurred: ' . $e->getMessage());
+    }
+}
+
+public function toggle(Request $request, Category $category)
+{
+    try {
+        $category->is_active = !$category->is_active;
+        $category->save();
+
+        if ($request->expectsJson()) {
+            return response()->json(['success' => true, 'message' => 'Category status updated', 'is_active' => $category->is_active], 200);
+        }
+
+        return redirect()->route('categories.index')->with('success', 'Category status updated');
+    } catch (\Exception $e) {
+        if ($request->expectsJson()) {
+            return response()->json(['success' => false, 'message' => 'An error occurred: ' . $e->getMessage()], 500);
+        }
+        return back()->with('error', 'An error occurred: ' . $e->getMessage());
     }
 }
 
