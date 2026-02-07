@@ -12,6 +12,8 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <!-- DataTables JS -->
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <!-- jQuery Validation (used by forms) -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
