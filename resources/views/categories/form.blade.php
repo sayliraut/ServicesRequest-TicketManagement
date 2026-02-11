@@ -30,7 +30,7 @@
                                 <label style="position: relative; display: inline-block; width: 60px; height: 32px;">
                                     <input type="checkbox" id="is_active" name="is_active" value="1" style="opacity: 0; width: 0; height: 0;" {{ old('is_active', $category->is_active ?? true) ? 'checked' : '' }} />
                                     <span id="slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #d1d5db; transition: .4s; border-radius: 32px;"></span>
-                                    <span id="slider-button" style="position: absolute; content: ''; height: 28px; width: 28px; left: 2px; bottom: 2px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2);\"></span>
+                                    <span id="slider-button" style="position: absolute; height: 28px; width: 28px; left: 2px; bottom: 2px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2);"></span>
                                 </label>
                                 <div>
                                     <span id="status-label" class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ old('is_active', $category->is_active ?? true) ? 'Active' : 'Inactive' }}</span>
