@@ -57,7 +57,7 @@ class TicketController extends Controller
     {
         $tickets = Auth::user()->tickets()
             ->with('category')
-            ->orderBy('created_at', 'desc')
+            ->latest('created_at')
             ->paginate(10);
 
         return view('tickets.index', compact('tickets'));
@@ -85,13 +85,18 @@ class TicketController extends Controller
         $this->authorizeAdmin();
 
         $tickets = Ticket::with('user', 'category', 'agent')
-            ->orderBy('created_at', 'desc')
+            ->latest('created_at')
             ->paginate(15);
 
+        // Aggregate stats efficiently with single database query
+        $statusCounts = Ticket::selectRaw('status, COUNT(*) as count')
+            ->groupBy('status')
+            ->pluck('count', 'status');
+        
         $stats = [
-            'open' => Ticket::where('status', Ticket::STATUS_OPEN)->count(),
-            'in_progress' => Ticket::where('status', Ticket::STATUS_IN_PROGRESS)->count(),
-            'closed' => Ticket::where('status', Ticket::STATUS_CLOSED)->count(),
+            'open' => $statusCounts[Ticket::STATUS_OPEN] ?? 0,
+            'in_progress' => $statusCounts[Ticket::STATUS_IN_PROGRESS] ?? 0,
+            'closed' => $statusCounts[Ticket::STATUS_CLOSED] ?? 0,
             'total' => Ticket::count(),
         ];
 
