@@ -8,16 +8,31 @@ class Category extends Model
 {
     protected $fillable = ['name', 'is_active'];
 
+    protected $casts = [
+        'is_active' => 'boolean',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+    protected $attributes = [
+        'is_active' => true,
+    ];
+
+    // Relationships
     public function tickets()
     {
         return $this->hasMany(Ticket::class);
     }
 
-    protected $casts = [
-        'is_active' => 'boolean',
-    ];
+    // Query Scopes
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
 
-    protected $attributes = [
-    'is_active' => true,
-    ];
+    public function scopeInactive($query)
+    {
+        return $query->where('is_active', false);
+    }
 }
+
