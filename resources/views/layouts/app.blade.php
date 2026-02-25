@@ -41,13 +41,13 @@
 
             <!-- Page Content with Sidebar -->
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-6">
-                <div class="flex">
-                    @include('layouts.sidebar')
+                <div class="flex flex-col lg:flex-row">
+                        @include('layouts.sidebar')
 
-                    <main class="flex-1 bg-transparent p-6">
-                        {{ $slot }}
-                    </main>
-                </div>
+                        <main class="flex-1 bg-transparent p-6">
+                            {{ $slot }}
+                        </main>
+                    </div>
             </div>
         </div>
     </body>
