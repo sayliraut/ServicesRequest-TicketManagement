@@ -1,5 +1,5 @@
-<aside class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 min-h-screen px-4 py-6 hidden lg:block">
-    <div class="sticky top-20">
+<aside class="w-full lg:w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 min-h-screen px-4 py-6">
+    <div class="sticky top-16">
         <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Navigation</h3>
 
         <nav class="mt-4" aria-label="Sidebar">
