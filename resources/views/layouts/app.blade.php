@@ -26,10 +26,8 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased bg-gray-100 dark:bg-gray-900">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
-
             <!-- Page Heading -->
             @isset($header)
                 <header class="bg-white dark:bg-gray-800 shadow">
@@ -39,15 +37,15 @@
                 </header>
             @endisset
 
-            <!-- Page Content with Sidebar -->
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-6">
-                <div class="flex flex-col lg:flex-row">
-                        @include('layouts.sidebar')
+            <!-- Main Layout: Sidebar + Content -->
+            <div class="flex">
+                <!-- Sidebar -->
+                @include('layouts.sidebar')
 
-                        <main class="flex-1 bg-transparent p-6">
-                            {{ $slot }}
-                        </main>
-                    </div>
+                <!-- Main Content -->
+                <main class="flex-1 bg-transparent p-6">
+                    {{ $slot }}
+                </main>
             </div>
         </div>
     </body>
