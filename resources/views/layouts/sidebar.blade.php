@@ -1,6 +1,21 @@
-<aside class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 min-h-screen shadow-sm">
+<aside class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 min-h-screen shadow-sm flex flex-col">
 
-    <div class="p-6 sticky top-16">
+    <div class="p-6 sticky top-16 flex-1 overflow-y-auto">
+
+        {{-- User Profile Section --}}
+        <div class="mb-8 pb-6 border-b border-gray-200 dark:border-gray-700">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center">
+                    <span class="text-sm font-bold text-indigo-600 dark:text-indigo-400">
+                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                    </span>
+                </div>
+                <div class="flex-1">
+                    <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ auth()->user()->name }}</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ ucfirst(auth()->user()->role) }}</p>
+                </div>
+            </div>
+        </div>
 
         <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-6">
             Navigation
@@ -82,6 +97,19 @@
             @endif
 
         </nav>
+    </div>
+
+    {{-- Logout Button --}}
+    <div class="p-6 border-t border-gray-200 dark:border-gray-700">
+        <form method="POST" action="{{ route('logout') }}" class="w-full">
+            @csrf
+            <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 dark:text-gray-300 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 transition duration-150">
+                <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                </svg>
+                <span>Logout</span>
+            </button>
+        </form>
     </div>
 
 </aside>
