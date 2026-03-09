@@ -10,8 +10,10 @@
                         {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                     </span>
                 </div>
+
+                
                 <div class="flex-1">
-                    
+
                     <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ auth()->user()->name }}</p>
                     <p class="text-xs text-gray-500 dark:text-gray-400">{{ ucfirst(auth()->user()->role) }}</p>
                 </div>
