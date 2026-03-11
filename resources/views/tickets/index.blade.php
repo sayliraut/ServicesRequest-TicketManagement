@@ -12,6 +12,8 @@
         </div>
     </x-slot>
 
+    <x-breadcrumbs :breadcrumbs="[['label' => 'Requests', 'url' => route('tickets.index')]]" />
+
     <div class="py-6">
         <div class="bg-white dark:bg-gray-800 shadow-md rounded-xl">
             <div class="p-6">

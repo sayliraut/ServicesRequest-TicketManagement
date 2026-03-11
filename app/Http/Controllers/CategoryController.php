@@ -32,25 +32,31 @@ public function edit(Category $category)
 {
     return view('categories.form', compact('category'));
 }
+protected function rules(?Category $category = null): array
+{
+    $uniqueRule = 'unique:categories,name';
+    if ($category) {
+        $uniqueRule .= ',' . $category->id;
+    }
+
+    return [
+        'name' => ['required','string','min:2','max:100',$uniqueRule],
+        'is_active' => ['nullable','boolean'],
+    ];
+}
+
 public function update(Request $request, Category $category)
 {
-    $validated = $request->validate([
-        'name' => 'required|string|min:2|max:100|unique:categories,name,' . $category->id,
-        'is_active' => 'nullable|boolean'
-    ]);
-
+    $validated = $request->validate($this->rules($category));
     $validated['is_active'] = $request->has('is_active') ? 1 : 0;
     $category->update($validated);
 
     return $this->respondWithJson(true, 'Category updated successfully!', $request);
 }
+
 public function store(Request $request)
 {
-    $validated = $request->validate([
-        'name' => 'required|string|min:2|max:100|unique:categories,name',
-        'is_active' => 'nullable|boolean'
-    ]);
-
+    $validated = $request->validate($this->rules());
     $validated['is_active'] = $request->has('is_active') ? 1 : 0;
     Category::create($validated);
 
@@ -72,20 +78,5 @@ public function toggle(Request $request, Category $category)
         'message' => 'Category status updated', 
         'is_active' => $category->is_active
     ]);
-}
-
-/**
- * Helper method for consistent JSON/redirect responses
- */
-private function respondWithJson($success, $message, Request $request, $statusCode = 200)
-{
-    if ($request->expectsJson()) {
-        return response()->json([
-            'success' => $success,
-            'message' => $message
-        ], $statusCode);
-    }
-
-    return redirect()->route('categories.index')->with('success', $message);
 }
 }
