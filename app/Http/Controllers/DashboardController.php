@@ -19,11 +19,20 @@ class DashboardController extends Controller
         $stats = [
             'total_categories' => Category::count(),
             'active_categories' => Category::where('is_active', 1)->count(),
-            'total_tickets' => Ticket::count(),
-            'open_tickets' => Ticket::where('status', 'open')->count(),
-            'in_progress_tickets' => Ticket::where('status', 'in_progress')->count(),
-            'closed_tickets' => Ticket::where('status', 'closed')->count(),
         ];
+
+        // consolidate ticket counts in one query
+        $ticketSummary = Ticket::selectRaw(
+            "COUNT(*) as total, \
+             SUM(status = 'open') as open, \
+             SUM(status = 'in_progress') as in_progress, \
+             SUM(status = 'closed') as closed"
+        )->first();
+
+        $stats['total_tickets'] = $ticketSummary->total;
+        $stats['open_tickets'] = $ticketSummary->open;
+        $stats['in_progress_tickets'] = $ticketSummary->in_progress;
+        $stats['closed_tickets'] = $ticketSummary->closed;
 
         // User-specific stats
         if (in_array($user->role, ['admin', 'agent'])) {
