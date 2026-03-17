@@ -35,7 +35,6 @@
         </nav>
     </div>
 
-    {{-- Logout Button --}}
     <div class="p-6 border-t border-gray-200 dark:border-gray-700">
         <form method="POST" action="{{ route('logout') }}" class="w-full">
             @csrf
@@ -44,5 +43,10 @@
             </button>
         </form>
     </div>
+
+
+
+
+
 
 </aside>
