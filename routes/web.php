@@ -18,7 +18,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Category Management Routes
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 Route::get('/categories/list', [CategoryController::class, 'list'])->name('categories.list');
 Route::get('/categories/loadajax', [CategoryController::class, 'loadAjax'])->name('categories.loadajax');
@@ -29,7 +28,6 @@ Route::put('/categories/{category}', [CategoryController::class, 'update'])->nam
 Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 Route::post('/categories/{category}/toggle', [CategoryController::class, 'toggle'])->name('categories.toggle');
 
-// Service Request Routes (User)
 Route::middleware('auth')->group(function () {
     Route::get('/requests/create', [TicketController::class, 'create'])->name('tickets.create');
     Route::post('/requests/store', [TicketController::class, 'store'])->name('tickets.store');
@@ -37,7 +35,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/requests/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
 });
 
-// Service Request Routes (Admin/Agent)
 Route::middleware('auth')->group(function () {
     Route::get('/admin/requests', [TicketController::class, 'adminIndex'])->name('tickets.admin-index');
     Route::put('/admin/requests/{ticket}/status', [TicketController::class, 'updateStatus'])->name('tickets.update-status');
