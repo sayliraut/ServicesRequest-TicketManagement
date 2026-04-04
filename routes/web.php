@@ -35,8 +35,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/requests/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
 });
 
-
-
 Route::middleware('auth')->group(function () {
     Route::get('/admin/requests', [TicketController::class, 'adminIndex'])->name('tickets.admin-index');
     Route::put('/admin/requests/{ticket}/status', [TicketController::class, 'updateStatus'])->name('tickets.update-status');
