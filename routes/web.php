@@ -28,6 +28,9 @@ Route::put('/categories/{category}', [CategoryController::class, 'update'])->nam
 Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 Route::post('/categories/{category}/toggle', [CategoryController::class, 'toggle'])->name('categories.toggle');
 
+
+Route::get('/faq', [CategoryController::class, 'index'])->name('faqs.index');
+
 Route::middleware('auth')->group(function () {
     Route::get('/requests/create', [TicketController::class, 'create'])->name('tickets.create');
     Route::post('/requests/store', [TicketController::class, 'store'])->name('tickets.store');
